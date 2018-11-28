@@ -6,6 +6,7 @@ import com.cognizant.bingo.account.domain.Ticket;
 import com.cognizant.bingo.account.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AccountController {
 
@@ -28,7 +30,9 @@ public class AccountController {
     @Value("${url.prize}")
     private String prizeURL;
 
-
+//    
+    
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "account", method = RequestMethod.POST)
     public String send(@RequestBody Account account) {
         final Ticket ticket = restTemplate.getForObject(ticketURL + "/random", Ticket.class);
@@ -40,6 +44,7 @@ public class AccountController {
         return accountService.createAccount(account);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "account", method = RequestMethod.GET)
     public List<Account> list() {
         return accountService.getAllAccounts();
